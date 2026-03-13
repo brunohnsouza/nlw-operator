@@ -23,13 +23,12 @@ Located in `src/components/ui/`. All components use:
 
 ```tsx
 // ✅ Good - composition
-<LeaderboardTableRoot>
-  <LeaderboardTableHeader />
-  <LeaderboardTableRow rank={1} score={9.2} ... />
-</LeaderboardTableRoot>
+<ComponentRoot>
+  <ComponentChild />
+</ComponentRoot>
 
 // ❌ Bad - props
-<LeaderboardTable entries={[]} showHeader />
+<Component prop1="" prop2="" />
 ```
 
 ### Creating New Components
@@ -37,15 +36,15 @@ Located in `src/components/ui/`. All components use:
 1. Use tailwind-variants for variants
 2. Extend native HTML props
 3. Use forwardRef when needed
-4. All colors via Tailwind theme variables (e.g., `text-accent-green`)
+4. All colors via Tailwind theme variables
 
 ## Colors (Tailwind Theme)
 
 Defined in `src/app/globals.css` `@theme`:
-- `--color-accent-green`, `--color-accent-red`, `--color-accent-amber`
-- `--color-bg-page`, `--color-bg-surface`, `--color-bg-input`
-- `--color-border-primary`
-- `--color-text-primary`, `--color-text-secondary`, `--color-text-tertiary`
+- `--color-accent-*` (green, red, amber)
+- `--color-bg-*` (page, surface, input)
+- `--color-border-*`
+- `--color-text-*` (primary, secondary, tertiary)
 
 ## Commands
 

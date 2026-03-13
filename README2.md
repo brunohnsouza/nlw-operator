@@ -1,41 +1,41 @@
 # DevRoast
 
-AI-powered code review with brutal honesty. Paste your code, get roasted.
+Análise de código com IA e honestidade brutal. Cole seu código, seja critiquado.
 
-## Features
+## Funcionalidades
 
-- **Code Analysis** - Submit code and receive detailed feedback on code quality
-- **Roast Mode** - Toggle between gentle feedback or maximum sarcasm
-- **Leaderboard** - See the worst code submissions ranked by shame score
-- **Syntax Highlighting** - Beautiful code blocks with vesper theme
-- **Score Ring** - Visual representation of code quality scores
+- **Análise de Código** - Envie código e receba feedback detalhado sobre qualidade
+- **Modo Roast** - Alterne entre feedback gentil ou sarcasmo máximo
+- **Leaderboard** - Veja os piores códigos submetidos ranqueados por nota de vergonha
+- **Syntax Highlighting** - Blocos de código lindos com tema vesper
+- **Score Ring** - Representação visual das notas de qualidade do código
 
-## Tech Stack
+## Tecnologias
 
 - Next.js 16 (App Router)
 - Tailwind CSS
-- Biome (linting & formatting)
+- Biome (linting & formatação)
 - Shiki (syntax highlighting)
-- Base UI (accessible primitives)
+- Base UI (primitivas acessíveis)
 
-## Getting Started
+## Começando
 
 ```bash
 npm install
 npm run dev
 ```
 
-## Project Structure
+## Estrutura do Projeto
 
 ```
 src/
-├── app/              # Next.js pages
-├── components/ui/    # Reusable UI components
-└── lib/              # Utilities
+├── app/              # Páginas Next.js
+├── components/ui/    # Componentes UI reutilizáveis
+└── lib/              # Utilitários
 ```
 
-## Commands
+## Comandos
 
-- `npm run dev` - Start development server
-- `npm run build` - Build for production
-- `npm run lint` - Run Biome linter
+- `npm run dev` - Iniciar servidor de desenvolvimento
+- `npm run build` - Build para produção
+- `npm run lint` - Executar Biome linter
