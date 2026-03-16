@@ -42,6 +42,7 @@ export interface CodeEditorProps {
 	placeholder?: string;
 	className?: string;
 	rows?: number;
+	maxHeight?: string;
 }
 
 export function CodeEditor({
@@ -50,6 +51,7 @@ export function CodeEditor({
 	placeholder = "// paste your code here...",
 	className,
 	rows = 16,
+	maxHeight = "400px",
 }: CodeEditorProps) {
 	const id = useId();
 	const textareaRef = useRef<HTMLTextAreaElement>(null);
@@ -184,7 +186,10 @@ export function CodeEditor({
 			</div>
 
 			{/* Editor Content */}
-			<div className="flex flex-1 overflow-hidden relative">
+			<div
+				className="flex flex-1 overflow-hidden relative"
+				style={{ maxHeight }}
+			>
 				{/* Line Numbers */}
 				<div className="flex flex-col border-r border-border-primary bg-bg-surface py-4 px-3 text-right font-mono text-xs leading-6 text-text-tertiary select-none">
 					{Array.from({ length: lineCount }, (_, i) => (
@@ -193,7 +198,10 @@ export function CodeEditor({
 				</div>
 
 				{/* Code Editor with Highlight */}
-				<div className="flex-1 relative overflow-hidden">
+				<div
+					className="flex-1 relative overflow-hidden"
+					style={{ maxHeight: `calc(${maxHeight} - 40px)` }}
+				>
 					{/* Highlight Layer */}
 					<div
 						ref={highlightRef}
