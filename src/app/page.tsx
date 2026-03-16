@@ -27,6 +27,7 @@ const sampleCode = `function calculateTotal(items) {
 export default function HomePage() {
 	const [code, setCode] = useState(sampleCode);
 	const [roastMode, setRoastMode] = useState(true);
+	const [isOverLimit, setIsOverLimit] = useState(false);
 	const hasCode = code.trim().length > 0;
 
 	return (
@@ -46,7 +47,12 @@ export default function HomePage() {
 				</div>
 
 				{/* Code Editor */}
-				<CodeEditor value={code} onChange={setCode} className="h-[360px]" />
+				<CodeEditor
+					value={code}
+					onChange={setCode}
+					onLimitChange={setIsOverLimit}
+					className="h-[360px]"
+				/>
 
 				{/* Actions Bar */}
 				<div className="flex items-center justify-between">
@@ -66,7 +72,7 @@ export default function HomePage() {
 								: "// gentle feedback mode"}
 						</span>
 					</div>
-					<Button variant="primary" disabled={!hasCode}>
+					<Button variant="primary" disabled={!hasCode || isOverLimit}>
 						$ roast_my_code
 					</Button>
 				</div>

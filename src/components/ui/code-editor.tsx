@@ -43,7 +43,11 @@ export interface CodeEditorProps {
 	className?: string;
 	rows?: number;
 	maxHeight?: string;
+	maxLength?: number;
+	onLimitChange?: (exceeded: boolean) => void;
 }
+
+const DEFAULT_MAX_LENGTH = 2000;
 
 export function CodeEditor({
 	value: controlledValue,
@@ -52,6 +56,8 @@ export function CodeEditor({
 	className,
 	rows = 16,
 	maxHeight = "400px",
+	maxLength = DEFAULT_MAX_LENGTH,
+	onLimitChange,
 }: CodeEditorProps) {
 	const id = useId();
 	const textareaRef = useRef<HTMLTextAreaElement>(null);
@@ -66,9 +72,18 @@ export function CodeEditor({
 
 	const value = controlledValue !== undefined ? controlledValue : internalValue;
 	const currentLanguage = selectedLanguage;
+	const charCount = value.length;
+	const isOverLimit = charCount > maxLength;
+
+	useEffect(() => {
+		onLimitChange?.(isOverLimit);
+	}, [isOverLimit, onLimitChange]);
 
 	const handleChange = useCallback(
 		(newValue: string) => {
+			if (newValue.length > maxLength) {
+				newValue = newValue.slice(0, maxLength);
+			}
 			setInternalValue(newValue);
 			onChange?.(newValue);
 
@@ -78,7 +93,7 @@ export function CodeEditor({
 				setSelectedLanguage(detected);
 			}
 		},
-		[onChange],
+		[onChange, maxLength],
 	);
 
 	const handleInput = useCallback(
@@ -231,6 +246,18 @@ export function CodeEditor({
 						rows={lineCount}
 					/>
 				</div>
+			</div>
+
+			{/* Character Count Footer */}
+			<div className="flex h-8 items-center justify-end border-t border-border-primary px-3">
+				<span
+					className={cn(
+						"font-mono text-xs",
+						isOverLimit ? "text-accent-red" : "text-text-tertiary",
+					)}
+				>
+					{charCount.toLocaleString()} / {maxLength.toLocaleString()}
+				</span>
 			</div>
 		</div>
 	);
