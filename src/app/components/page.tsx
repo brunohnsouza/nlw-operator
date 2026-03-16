@@ -111,6 +111,7 @@ export default function ComponentsPage() {
 					code={sampleCode}
 					lang="javascript"
 					filename="calculate.js"
+					showHeader
 				/>
 			</section>
 

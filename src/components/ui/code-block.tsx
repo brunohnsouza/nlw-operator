@@ -24,14 +24,18 @@ export interface CodeBlockProps {
 	code: string;
 	lang?: string;
 	showLineNumbers?: boolean;
+	showHeader?: boolean;
 	filename?: string;
+	className?: string;
 }
 
 export async function CodeBlock({
 	code,
 	lang = "javascript",
 	showLineNumbers = true,
+	showHeader = false,
 	filename,
+	className,
 }: CodeBlockProps) {
 	const hl = await getHighlighterInstance();
 
@@ -43,21 +47,26 @@ export async function CodeBlock({
 	const lines = code.split("\n");
 
 	return (
-		<div className="w-[560px] rounded-lg border border-border-primary bg-bg-input overflow-hidden">
-			<div className="flex items-center gap-3 h-10 px-4 border-b border-border-primary">
-				<span className="h-2.5 w-2.5 rounded-full bg-red-500" />
-				<span className="h-2.5 w-2.5 rounded-full bg-amber-500" />
-				<span className="h-2.5 w-2.5 rounded-full bg-emerald-500" />
-				{filename && (
-					<span className="ml-auto font-mono text-xs text-text-tertiary">
-						{filename}
-					</span>
-				)}
-			</div>
+		<div
+			className={`rounded-lg border border-border-primary bg-bg-input overflow-hidden ${
+				className ?? ""
+			}`}
+		>
+			{showHeader && (
+				<div className="flex items-center gap-3 h-10 px-4 border-b border-border-primary">
+					<span className="h-2.5 w-2.5 rounded-full bg-red-500" />
+					<span className="h-2.5 w-2.5 rounded-full bg-amber-500" />
+					<span className="h-2.5 w-2.5 rounded-full bg-emerald-500" />
+					{filename && (
+						<span className="ml-auto font-mono text-xs text-text-tertiary">
+							{filename}
+						</span>
+					)}
+				</div>
+			)}
 			<div className="flex">
 				{showLineNumbers && (
 					<div className="w-10 min-w-[40px] py-3 px-[10px] text-right border-r border-border-primary bg-bg-surface">
-						{/* eslint-disable-next-line @typescript-eslint/no-unnecessary-type-assertion */}
 						{lines.map((_, i) => (
 							<div
 								key={i}
@@ -68,7 +77,6 @@ export async function CodeBlock({
 						))}
 					</div>
 				)}
-				{/* eslint-disable-next-line react/no-dangerously-set-inner-html */}
 				<div
 					className="flex-1 p-3 overflow-x-auto"
 					dangerouslySetInnerHTML={{ __html: htmlOutput }}
