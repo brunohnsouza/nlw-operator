@@ -1,6 +1,7 @@
 import "./globals.css";
 
 import { Navbar } from "@/components/ui/navbar";
+import { TRPCReactProvider } from "@/trpc/client";
 
 export default function RootLayout({
 	children,
@@ -10,8 +11,10 @@ export default function RootLayout({
 	return (
 		<html lang="en">
 			<body className="bg-bg-page">
-				<Navbar />
-				<main>{children}</main>
+				<TRPCReactProvider>
+					<Navbar />
+					<main>{children}</main>
+				</TRPCReactProvider>
 			</body>
 		</html>
 	);

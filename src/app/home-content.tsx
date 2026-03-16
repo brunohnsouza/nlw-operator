@@ -1,13 +1,17 @@
+"use client";
+
 import Link from "next/link";
+import { useState } from "react";
 
 import { Button } from "@/components/ui/button";
+import { CodeEditor } from "@/components/ui/code-editor";
 import {
 	LeaderboardTableHeader,
 	LeaderboardTableRoot,
 	LeaderboardTableRow,
 } from "@/components/ui/leaderboard-table";
 import { MetricsSection } from "@/components/ui/metrics-section";
-import { EditorSection } from "./editor-section";
+import { Toggle } from "@/components/ui/toggle";
 
 const sampleCode = `function calculateTotal(items) {
   var total = 0;
@@ -21,7 +25,12 @@ const sampleCode = `function calculateTotal(items) {
 // TODO: handle currency conversion
 }`;
 
-export default function HomePage() {
+export function HomeContent() {
+	const [code, setCode] = useState(sampleCode);
+	const [roastMode, setRoastMode] = useState(true);
+	const [isOverLimit, setIsOverLimit] = useState(false);
+	const hasCode = code.trim().length > 0;
+
 	return (
 		<div className="flex min-h-[calc(100vh-3.5rem)] flex-col items-center px-10 py-12">
 			<div className="flex w-full max-w-[960px] flex-col gap-8">
@@ -38,8 +47,36 @@ export default function HomePage() {
 					</p>
 				</div>
 
-				{/* Code Editor Section */}
-				<EditorSection initialCode={sampleCode} />
+				{/* Code Editor */}
+				<CodeEditor
+					value={code}
+					onChange={setCode}
+					onLimitChange={setIsOverLimit}
+					className="h-[360px]"
+				/>
+
+				{/* Actions Bar */}
+				<div className="flex items-center justify-between">
+					<div className="flex items-center gap-4">
+						<Toggle pressed={roastMode} onPressedChange={setRoastMode}>
+							<span
+								className={
+									roastMode ? "text-accent-green" : "text-text-tertiary"
+								}
+							>
+								roast mode
+							</span>
+						</Toggle>
+						<span className="font-mono text-xs text-text-tertiary">
+							{roastMode
+								? "// maximum sarcasm enabled"
+								: "// gentle feedback mode"}
+						</span>
+					</div>
+					<Button variant="primary" disabled={!hasCode || isOverLimit}>
+						$ roast_my_code
+					</Button>
+				</div>
 
 				{/* Footer Hint */}
 				<MetricsSection />
