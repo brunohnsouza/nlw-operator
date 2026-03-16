@@ -23,3 +23,68 @@
 body {
 	font-family: ui-sans-serif, system-ui, sans-serif;
 }
+
+/* Highlight.js Theme - Vesper-inspired */
+.hljs {
+	color: #e4e4e7;
+	background: transparent;
+}
+
+.hljs-keyword,
+.hljs-selector-tag,
+.hljs-title,
+.hljs-section,
+.hljs-doctag,
+.hljs-name,
+.hljs-strong {
+	color: #c792ea;
+}
+
+.hljs-comment {
+	color: #676b7a;
+	font-style: italic;
+}
+
+.hljs-string,
+.hljs-title.class_,
+.hljs-title.class_.inherited__,
+.hljs-title.function_ {
+	color: #c3e88d;
+}
+
+.hljs-attr,
+.hljs-variable,
+.hljs-template-variable,
+.hljs-type,
+.hljs-selector-class,
+.hljs-selector-attr,
+.hljs-selector-pseudo,
+.hljs-number {
+	color: #f78c6c;
+}
+
+.hljs-symbol,
+.hljs-bullet,
+.hljs-link,
+.hljs-meta,
+.hljs-selector-id,
+.hljs-built_in {
+	color: #ffcb6b;
+}
+
+.hljs-emphasis {
+	font-style: italic;
+}
+
+.hljs-attribute {
+	color: #ffcb6b;
+}
+
+.hljs-function,
+.hljs-class .hljs-title {
+	color: #82aaff;
+}
+
+.hljs-params {
+	color: #e4e4e7;
+}
