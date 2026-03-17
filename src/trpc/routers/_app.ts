@@ -1,6 +1,64 @@
+import { sql } from "drizzle-orm";
+import { z } from "zod";
+import { type DiffLine, type Issue, submissions } from "@/db/schema";
+import { analyzeCode } from "@/lib/ai";
 import { baseProcedure, router } from "../init";
 
+const languageEnum = z.enum([
+	"javascript",
+	"typescript",
+	"python",
+	"go",
+	"rust",
+	"html",
+	"css",
+	"json",
+]);
+
 export const appRouter = router({
+	roasts: router({
+		analyze: baseProcedure
+			.input(
+				z.object({
+					code: z.string(),
+					language: languageEnum,
+					roastMode: z.boolean(),
+				}),
+			)
+			.mutation(async ({ ctx, input }) => {
+				const result = await analyzeCode({
+					code: input.code,
+					language: input.language,
+					roastMode: input.roastMode,
+				});
+
+				const [submission] = await ctx.db
+					.insert(submissions)
+					.values({
+						code: input.code,
+						language: input.language,
+						score: result.score.toString(),
+						roastMode: input.roastMode,
+						verdict: result.verdict,
+						roastTitle: result.roastTitle,
+						issues: result.issues as Issue[],
+						diff: result.diff as DiffLine[],
+					})
+					.returning();
+
+				return { id: submission.id };
+			}),
+		getById: baseProcedure
+			.input(z.object({ id: z.string().uuid() }))
+			.query(async ({ ctx, input }) => {
+				const [submission] = await ctx.db
+					.select()
+					.from(submissions)
+					.where(sql`${submissions.id} = ${input.id}`);
+
+				return submission;
+			}),
+	}),
 	metrics: router({
 		getStats: baseProcedure.query(async ({ ctx: _ctx }) => {
 			// Mock para teste - retornar valores maiores para ver animação
