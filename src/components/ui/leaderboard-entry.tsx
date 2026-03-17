@@ -1,6 +1,6 @@
 import { forwardRef, type HTMLAttributes } from "react";
 
-import { CodeBlock } from "./code-block";
+import { CodePreview } from "./code-preview";
 
 export interface LeaderboardEntryProps extends HTMLAttributes<HTMLDivElement> {
 	rank: number;
@@ -45,7 +45,7 @@ export const LeaderboardEntry = forwardRef<
 					</span>
 				</div>
 			</div>
-			<CodeBlock code={code} lang={language} showLineNumbers />
+			<CodePreview code={code} lang={language} maxLines={3} />
 		</div>
 	);
 });
