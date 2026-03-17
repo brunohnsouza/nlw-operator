@@ -56,7 +56,22 @@ export const appRouter = router({
 					.from(submissions)
 					.where(sql`${submissions.id} = ${input.id}`);
 
-				return submission;
+				if (!submission) {
+					throw new Error("Roast not found");
+				}
+
+				return {
+					id: submission.id,
+					code: submission.code,
+					language: submission.language,
+					roastMode: submission.roastMode,
+					score: Number(submission.score),
+					verdict: submission.verdict,
+					roastTitle: submission.roastTitle,
+					issues: submission.issues as Issue[],
+					diff: submission.diff as DiffLine[],
+					createdAt: submission.createdAt,
+				};
 			}),
 	}),
 	metrics: router({
