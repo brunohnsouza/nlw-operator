@@ -1,8 +1,8 @@
 "use client";
 
-import Image from "next/image";
+import html2canvas from "html2canvas";
 import { useRouter } from "next/navigation";
-import { useState } from "react";
+import { useRef, useState } from "react";
 
 interface RoastData {
 	id: string;
@@ -20,21 +20,22 @@ interface ShareContentProps {
 export function ShareContent({ roast }: ShareContentProps) {
 	const [downloading, setDownloading] = useState(false);
 	const router = useRouter();
-	const imageUrl = `/api/og/${roast.id}`;
+	const cardRef = useRef<HTMLDivElement>(null);
 
 	const handleDownload = async () => {
+		if (!cardRef.current) return;
+
 		setDownloading(true);
 		try {
-			const response = await fetch(imageUrl);
-			const blob = await response.blob();
-			const url = window.URL.createObjectURL(blob);
-			const a = document.createElement("a");
-			a.href = url;
-			a.download = `devroast-${roast.id}.png`;
-			document.body.appendChild(a);
-			a.click();
-			window.URL.revokeObjectURL(url);
-			document.body.removeChild(a);
+			const canvas = await html2canvas(cardRef.current, {
+				backgroundColor: "#0C0C0C",
+				scale: 2,
+			});
+
+			const link = document.createElement("a");
+			link.download = `devroast-${roast.id}.png`;
+			link.href = canvas.toDataURL("image/png");
+			link.click();
 		} catch (error) {
 			console.error("Error downloading image:", error);
 		} finally {
@@ -64,40 +65,154 @@ export function ShareContent({ roast }: ShareContentProps) {
 				</div>
 
 				<div className="flex flex-col items-center gap-6">
-					<div className="overflow-hidden rounded-lg border border-border-primary">
-						<Image
-							src={imageUrl}
-							alt={`Roast: ${roast.roastTitle}`}
-							width={1200}
-							height={630}
-							className="max-w-full h-auto"
-						/>
+					<div
+						ref={cardRef}
+						style={{
+							backgroundColor: "#0C0C0C",
+							width: 600,
+							height: 315,
+							display: "flex",
+							flexDirection: "column",
+							alignItems: "center",
+							justifyContent: "center",
+							padding: 32,
+							gap: 14,
+						}}
+					>
+						<div
+							style={{
+								display: "flex",
+								alignItems: "center",
+								gap: 8,
+								marginBottom: 14,
+							}}
+						>
+							<span
+								style={{
+									color: "#10B981",
+									fontSize: 12,
+									fontWeight: 700,
+									fontFamily: "JetBrains Mono, monospace",
+								}}
+							>
+								&gt;
+							</span>
+							<span
+								style={{
+									color: "#FAFAFA",
+									fontSize: 10,
+									fontWeight: 500,
+									fontFamily: "JetBrains Mono, monospace",
+								}}
+							>
+								devroast
+							</span>
+						</div>
+
+						<div
+							style={{
+								display: "flex",
+								alignItems: "baseline",
+								gap: 2,
+								marginBottom: 14,
+							}}
+						>
+							<span
+								style={{
+									color: "#F59E0B",
+									fontSize: 80,
+									fontWeight: 900,
+									lineHeight: 1,
+									fontFamily: "JetBrains Mono, monospace",
+								}}
+							>
+								{roast.score.toFixed(1)}
+							</span>
+							<span
+								style={{
+									color: "#737373",
+									fontSize: 28,
+									fontWeight: 400,
+									lineHeight: 1,
+									fontFamily: "JetBrains Mono, monospace",
+								}}
+							>
+								/10
+							</span>
+						</div>
+
+						<div
+							style={{
+								display: "flex",
+								alignItems: "center",
+								gap: 4,
+								marginBottom: 14,
+							}}
+						>
+							<div
+								style={{
+									width: 6,
+									height: 6,
+									borderRadius: "50%",
+									backgroundColor: "#EF4444",
+								}}
+							/>
+							<span
+								style={{
+									color: "#EF4444",
+									fontSize: 10,
+									fontWeight: 400,
+									fontFamily: "JetBrains Mono, monospace",
+								}}
+							>
+								{roast.verdict || "unknown"}
+							</span>
+						</div>
+
+						<div
+							style={{
+								color: "#737373",
+								fontSize: 8,
+								fontWeight: 400,
+								fontFamily: "JetBrains Mono, monospace",
+								marginBottom: 14,
+							}}
+						>
+							lang: {roast.language} · {roast.code.split("\n").length} lines
+						</div>
+
+						<div
+							style={{
+								color: "#FAFAFA",
+								fontSize: 11,
+								fontWeight: 400,
+								fontFamily: "IBM Plex Mono, monospace",
+								textAlign: "center",
+								maxWidth: "100%",
+								lineHeight: 1.5,
+								display: "-webkit-box",
+								WebkitLineClamp: 2,
+								WebkitBoxOrient: "vertical",
+								overflow: "hidden",
+							}}
+						>
+							&quot;{roast.roastTitle || "No title"}&quot;
+						</div>
 					</div>
 
-					<div className="flex gap-4">
-						<button
-							type="button"
-							onClick={handleDownload}
-							disabled={downloading}
-							className="rounded bg-accent-green px-6 py-3 font-mono text-sm font-medium text-bg-page transition-colors hover:bg-accent-green/90 disabled:opacity-50"
-						>
-							{downloading ? "downloading..." : "↓ download image"}
-						</button>
-						<button
-							type="button"
-							onClick={() => {
-								navigator.clipboard.writeText(window.location.href);
-							}}
-							className="rounded border border-border-primary px-6 py-3 font-mono text-sm text-text-primary transition-colors hover:bg-bg-surface"
-						>
-							$ copy link
-						</button>
-					</div>
+					<button
+						type="button"
+						onClick={handleDownload}
+						disabled={downloading}
+						className="rounded bg-accent-green px-6 py-3 font-mono text-sm font-medium text-bg-page transition-colors hover:bg-accent-green/90 disabled:opacity-50"
+					>
+						{downloading ? "downloading..." : "↓ download image"}
+					</button>
 				</div>
 
 				<div className="mt-8 text-center">
 					<p className="font-mono text-xs text-text-tertiary">
-						Share this image on social media to show off your code review
+						Click download to save the image
 					</p>
 				</div>
 			</div>
