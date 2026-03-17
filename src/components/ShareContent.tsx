@@ -70,13 +70,14 @@ export function ShareContent({ roast }: ShareContentProps) {
 						style={{
 							backgroundColor: "#0C0C0C",
 							width: 600,
-							height: 315,
+							minHeight: 350,
 							display: "flex",
 							flexDirection: "column",
 							alignItems: "center",
 							justifyContent: "center",
 							padding: 32,
 							gap: 14,
+							overflow: "hidden",
 						}}
 					>
 						<div
