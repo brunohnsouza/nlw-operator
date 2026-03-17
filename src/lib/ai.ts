@@ -1,7 +1,5 @@
-import { GoogleGenerativeAI } from "@google/generative-ai";
+import Groq from "groq-sdk";
 import type { DiffLine, Issue } from "@/db/schema";
-
-const genAI = new GoogleGenerativeAI(process.env.GEMINI_API_KEY ?? "");
 
 const SYSTEM_PROMPT_ROAST = `You are DevRoast, a brutally honest code reviewer. Your goal is to roast bad code with sarcastic, harsh humor. Be direct, witty, and don't hold back. Rate the code from 0-10 where 0 is absolutely terrible and 10 is perfect code. Find as many critical issues as possible.`;
 
@@ -15,6 +13,14 @@ export type AnalyzeCodeResult = {
 	diff: DiffLine[];
 };
 
+function getGroqClient() {
+	const apiKey = process.env.GROQ_API_KEY;
+	if (!apiKey) {
+		throw new Error("GROQ_API_KEY environment variable is not set");
+	}
+	return new Groq({ apiKey });
+}
+
 export async function analyzeCode({
 	code,
 	language,
@@ -26,12 +32,12 @@ export async function analyzeCode({
 }): Promise<AnalyzeCodeResult> {
 	const systemPrompt = roastMode ? SYSTEM_PROMPT_ROAST : SYSTEM_PROMPT_GENTLE;
 
-	const model = genAI.getGenerativeModel({
-		model: "gemini-2.0-flash",
-		systemInstruction: systemPrompt,
-	});
-
-	const prompt = `Analyze this ${language} code and provide a review.
+	const chatCompletion = await getGroqClient().chat.completions.create({
+		messages: [
+			{ role: "system", content: systemPrompt },
+			{
+				role: "user",
+				content: `Analyze this ${language} code and provide a review.
 
 Code:
 \`\`\`${language}
@@ -56,30 +62,26 @@ Return ONLY valid JSON (no markdown, no explanation) with this exact structure:
       "code": "line of code"
     }
   ]
-}`;
-
-	const result = await model.generateContent({
-		contents: [{ role: "user", parts: [{ text: prompt }] }],
-		generationConfig: {
-			responseMimeType: "application/json",
-			temperature: 0.7,
-		},
+}`,
+			},
+		],
+		model: "llama-3.3-70b-versatile",
+		response_format: { type: "json_object" },
 	});
 
-	const response = result.response;
+	const message = chatCompletion.choices[0]?.message;
 
-	if (!response) {
-		throw new Error("Failed to get analysis response from Gemini");
+	if (!message) {
+		throw new Error("Failed to get analysis response from Groq");
 	}
 
-	const text = response.text();
+	const content = message.content;
 
-	if (!text) {
-		throw new Error("Failed to get analysis text from Gemini");
+	if (!content) {
+		throw new Error("Failed to get analysis text from Groq");
 	}
 
-	const cleanedText = text.replace(/```json?/g, "").trim();
-	const parsed = JSON.parse(cleanedText) as AnalyzeCodeResult;
+	const parsed = JSON.parse(content) as AnalyzeCodeResult;
 
 	const score = Math.max(0, Math.min(10, Number(parsed.score) || 5));
 
