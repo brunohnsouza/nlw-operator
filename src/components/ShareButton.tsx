@@ -1,19 +1,16 @@
 "use client";
 
-import { useState } from "react";
+import { useRouter } from "next/navigation";
 
 interface ShareButtonProps {
 	roastId: string;
 }
 
 export function ShareButton({ roastId }: ShareButtonProps) {
-	const [copied, setCopied] = useState(false);
+	const router = useRouter();
 
-	const handleShare = async () => {
-		const url = `${window.location.origin}/result/${roastId}`;
-		await navigator.clipboard.writeText(url);
-		setCopied(true);
-		setTimeout(() => setCopied(false), 2000);
+	const handleShare = () => {
+		router.push(`/share/${roastId}`);
 	};
 
 	return (
@@ -22,7 +19,7 @@ export function ShareButton({ roastId }: ShareButtonProps) {
 			onClick={handleShare}
 			className="rounded border border-border-primary px-4 py-2 font-mono text-xs text-text-primary transition-colors hover:bg-bg-surface"
 		>
-			{copied ? "$ copied!" : "$ share_roast"}
+			$ share_roast
 		</button>
 	);
 }
