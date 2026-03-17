@@ -100,19 +100,32 @@ export function HomeContent() {
 						<LeaderboardTableRow
 							rank={1}
 							score={2.1}
-							codePreview="function calculateTotal(items) { var total = 0; for (var i = 0; i < items.length; i++) { ..."
+							code={`function calculateTotal(items) {
+  var total = 0;
+  for (var i = 0; i < items.length; i++) {
+    total += items[i].price;
+  }
+  return total;
+}`}
 							language="javascript"
 						/>
 						<LeaderboardTableRow
 							rank={2}
 							score={3.5}
-							codePreview="const add = (a, b) => { return a + b; } // no type safety, wow"
+							code={`const add = (a, b) => {
+  // no type safety, wow
+  return a + b;
+}`}
 							language="javascript"
 						/>
 						<LeaderboardTableRow
 							rank={3}
 							score={4.8}
-							codePreview="if (condition) { doSomething() } else { // empty }"
+							code={`if (condition) {
+  doSomething();
+} else {
+  // empty
+}`}
 							language="javascript"
 						/>
 					</LeaderboardTableRoot>

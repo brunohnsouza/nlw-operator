@@ -51,3 +51,18 @@ Defined in `src/app/globals.css` `@theme`:
 - `npm run dev` - Development
 - `npm run build` - Production build
 - `npm run lint` - Biome check
+
+## Documentação Detalhada
+
+Padrões específicos de cada área:
+
+- [Componentes UI](./src/components/ui/AGENTS.md) - Componentes, variantes, tailwind-variants
+- [tRPC](./src/trpc/AGENTS.md) - API, procedures, client/server
+- [Drizzle](./src/db/AGENTS.md) - ORM, schema, queries
+- [Utils](./src/lib/AGENTS.md) - Funções utilitárias
+
+##Specs
+
+Decisões técnicas documentadas em `specs/`:
+- [tRPC](./specs/trpc.md)
+- [Drizzle](./specs/drizzle.md)

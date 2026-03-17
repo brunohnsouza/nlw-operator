@@ -1,4 +1,5 @@
 import { cn } from "@/lib/utils";
+import { CodePreview } from "./code-preview";
 
 export interface LeaderboardTableRootProps {
 	className?: string;
@@ -54,7 +55,7 @@ export function LeaderboardTableHeader({
 export interface LeaderboardTableRowProps {
 	rank: number;
 	score: number;
-	codePreview: string;
+	code: string;
 	language: string;
 	className?: string;
 }
@@ -62,7 +63,7 @@ export interface LeaderboardTableRowProps {
 export function LeaderboardTableRow({
 	rank,
 	score,
-	codePreview,
+	code,
 	language,
 	className,
 }: LeaderboardTableRowProps) {
@@ -76,20 +77,22 @@ export function LeaderboardTableRow({
 	return (
 		<div
 			className={cn(
-				"flex items-center border-b border-border-primary px-5 py-4 last:border-b-0",
+				"flex items-start border-b border-border-primary px-5 py-4 last:border-b-0",
 				className,
 			)}
 		>
-			<span className="w-[50px] font-mono text-sm text-text-tertiary">
+			<span className="w-[50px] pt-1 font-mono text-sm text-text-tertiary">
 				#{rank}
 			</span>
-			<span className={cn("w-[70px] font-mono text-sm font-bold", scoreColor)}>
+			<span
+				className={cn("w-[70px] pt-1 font-mono text-sm font-bold", scoreColor)}
+			>
 				{score.toFixed(1)}
 			</span>
 			<span className="flex-1 truncate font-mono text-xs text-text-secondary">
-				{codePreview}
+				<CodePreview code={code} lang={language} maxLines={3} />
 			</span>
-			<span className="w-[100px] font-mono text-xs text-text-tertiary">
+			<span className="w-[100px] pl-4 pt-1 font-mono text-xs text-text-tertiary">
 				{language}
 			</span>
 		</div>
