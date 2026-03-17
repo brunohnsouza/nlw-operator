@@ -70,21 +70,20 @@ export function ShareContent({ roast }: ShareContentProps) {
 						style={{
 							backgroundColor: "#0C0C0C",
 							width: 600,
-							minHeight: 420,
+							height: 315,
 							display: "flex",
 							flexDirection: "column",
 							alignItems: "center",
 							justifyContent: "center",
 							padding: 32,
 							gap: 14,
-							overflow: "hidden",
 						}}
 					>
 						<div
 							style={{
 								display: "flex",
 								alignItems: "center",
-								gap: 8,
+								gap: 4,
 								marginBottom: 14,
 							}}
 						>
@@ -148,7 +147,6 @@ export function ShareContent({ roast }: ShareContentProps) {
 								alignItems: "center",
 								gap: 4,
 								marginBottom: 14,
-								height: 16,
 							}}
 						>
 							<div
@@ -157,7 +155,6 @@ export function ShareContent({ roast }: ShareContentProps) {
 									height: 6,
 									borderRadius: "50%",
 									backgroundColor: "#EF4444",
-									flexShrink: 0,
 								}}
 							/>
 							<span
@@ -166,7 +163,6 @@ export function ShareContent({ roast }: ShareContentProps) {
 									fontSize: 10,
 									fontWeight: 400,
 									fontFamily: "JetBrains Mono, monospace",
-									lineHeight: "16px",
 								}}
 							>
 								{roast.verdict || "unknown"}
@@ -192,11 +188,7 @@ export function ShareContent({ roast }: ShareContentProps) {
 								fontWeight: 400,
 								fontFamily: "IBM Plex Mono, monospace",
 								textAlign: "center",
-								maxWidth: "100%",
 								lineHeight: 1.4,
-								minHeight: 32,
-								display: "flex",
-								alignItems: "center",
 							}}
 						>
 							&quot;{roast.roastTitle || "No title"}&quot;
