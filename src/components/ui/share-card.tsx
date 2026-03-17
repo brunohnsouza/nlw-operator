@@ -36,17 +36,17 @@ export const ShareCard = forwardRef<HTMLDivElement, ShareCardProps>(
 				{/* Logo Row */}
 				<div
 					className="flex items-center justify-center gap-2"
-					style={{ height: isMd ? 24 : 12 }}
+					style={{ height: isMd ? 28 : 14 }}
 				>
 					<span
 						className="text-accent-green font-mono"
-						style={{ fontSize: isMd ? 12 : 6, fontWeight: 700 }}
+						style={{ fontSize: isMd ? 14 : 7, fontWeight: 700 }}
 					>
 						&gt;
 					</span>
 					<span
 						className="text-text-primary font-mono"
-						style={{ fontSize: isMd ? 10 : 5, fontWeight: 500 }}
+						style={{ fontSize: isMd ? 12 : 6, fontWeight: 500 }}
 					>
 						devroast
 					</span>
@@ -55,12 +55,12 @@ export const ShareCard = forwardRef<HTMLDivElement, ShareCardProps>(
 				{/* Score Row - aligned to end for proper baseline */}
 				<div
 					className="flex items-end justify-center"
-					style={{ gap: 2, height: isMd ? 85 : 42 }}
+					style={{ gap: 2, height: isMd ? 100 : 50 }}
 				>
 					<span
 						className="text-accent-amber font-mono"
 						style={{
-							fontSize: isMd ? 80 : 40,
+							fontSize: isMd ? 90 : 45,
 							fontWeight: 900,
 							lineHeight: 1,
 						}}
@@ -70,7 +70,7 @@ export const ShareCard = forwardRef<HTMLDivElement, ShareCardProps>(
 					<span
 						className="text-text-tertiary font-mono"
 						style={{
-							fontSize: isMd ? 28 : 14,
+							fontSize: isMd ? 32 : 16,
 							fontWeight: 400,
 							lineHeight: 1,
 						}}
@@ -82,19 +82,19 @@ export const ShareCard = forwardRef<HTMLDivElement, ShareCardProps>(
 				{/* Verdict Row - centered vertically */}
 				<div
 					className="flex items-center justify-center gap-2"
-					style={{ height: isMd ? 24 : 12 }}
+					style={{ height: isMd ? 28 : 14 }}
 				>
 					<div
 						className="rounded-full bg-accent-red"
 						style={{
-							width: isMd ? 12 : 6,
-							height: isMd ? 12 : 6,
+							width: isMd ? 14 : 7,
+							height: isMd ? 14 : 7,
 							flexShrink: 0,
 						}}
 					/>
 					<span
 						className="text-accent-red font-mono"
-						style={{ fontSize: isMd ? 10 : 5, fontWeight: 400 }}
+						style={{ fontSize: isMd ? 12 : 6, fontWeight: 400 }}
 					>
 						{verdict || "unknown"}
 					</span>
@@ -103,7 +103,7 @@ export const ShareCard = forwardRef<HTMLDivElement, ShareCardProps>(
 				{/* Lang Info */}
 				<div
 					className="text-text-tertiary font-mono text-center"
-					style={{ fontSize: isMd ? 8 : 4 }}
+					style={{ fontSize: isMd ? 9 : 4.5 }}
 				>
 					lang: {language} · {linesCount} lines
 				</div>
@@ -112,7 +112,7 @@ export const ShareCard = forwardRef<HTMLDivElement, ShareCardProps>(
 				<div
 					className="text-text-primary text-center"
 					style={{
-						fontSize: isMd ? 11 : 5.5,
+						fontSize: isMd ? 12 : 6,
 						lineHeight: 1.5,
 					}}
 				>
