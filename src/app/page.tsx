@@ -7,6 +7,8 @@ import {
 import { MetricsSection } from "@/components/ui/metrics-section";
 import { EditorSection } from "./editor-section";
 
+export const revalidate = 3600; // 1 hour
+
 const sampleCode = `function calculateTotal(items) {
   var total = 0;
   for (var i = 0; i < items.length; i++) {
