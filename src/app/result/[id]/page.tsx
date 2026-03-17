@@ -1,4 +1,3 @@
-import { cacheLife } from "next/cache";
 import { notFound } from "next/navigation";
 import {
 	AnalysisCard,
@@ -16,9 +15,6 @@ export default async function ResultPage({
 }: {
 	params: Promise<{ id: string }>;
 }) {
-	"use cache";
-	cacheLife("days");
-
 	const { id } = await params;
 
 	const roast = await caller.roasts.getById({ id }).catch(() => {
