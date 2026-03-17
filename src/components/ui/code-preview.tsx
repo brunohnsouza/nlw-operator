@@ -41,9 +41,7 @@ export function CodePreview({ code, lang, maxLines = 3 }: CodePreviewProps) {
 					</button>
 				)}
 				<Collapsible.Panel>
-					<div className="mr-4">
-						<CodeBlockClient code={code} lang={lang} showLineNumbers />
-					</div>
+					<CodeBlockClient code={code} lang={lang} showLineNumbers />
 				</Collapsible.Panel>
 			</div>
 		</Collapsible.Root>
