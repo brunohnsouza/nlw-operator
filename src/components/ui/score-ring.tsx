@@ -1,7 +1,5 @@
 "use client";
 
-import { useId } from "react";
-
 import { cn } from "@/lib/utils";
 
 export interface ScoreRingProps {
@@ -11,20 +9,25 @@ export interface ScoreRingProps {
 	className?: string;
 }
 
+function getScoreColor(value: number, max: number): string {
+	const percentage = (value / max) * 100;
+	if (percentage >= 70) return "var(--color-accent-green)";
+	if (percentage >= 40) return "var(--color-accent-amber)";
+	return "var(--color-accent-red)";
+}
+
 export function ScoreRing({
 	value,
 	max = 10,
 	size = 180,
 	className,
 }: ScoreRingProps) {
-	const id = useId();
 	const radius = (size - 8) / 2;
 	const circumference = 2 * Math.PI * radius;
 	const normalizedValue = Math.min(Math.max(value, 0), max);
 	const percentage = (normalizedValue / max) * 100;
 	const dashOffset = circumference - (percentage / 100) * circumference;
-
-	const gradientId = `score-ring-gradient-${id}`;
+	const strokeColor = getScoreColor(normalizedValue, max);
 
 	return (
 		<div
@@ -39,13 +42,6 @@ export function ScoreRing({
 				aria-label={`Score: ${normalizedValue} out of ${max}`}
 			>
 				<title>{`Score: ${normalizedValue} out of ${max}`}</title>
-				<defs>
-					<linearGradient id={gradientId} x1="0%" y1="0%" x2="100%" y2="0%">
-						<stop offset="0%" stopColor="var(--color-accent-green)" />
-						<stop offset="35%" stopColor="var(--color-accent-amber)" />
-						<stop offset="36%" stopColor="transparent" />
-					</linearGradient>
-				</defs>
 				<circle
 					cx={size / 2}
 					cy={size / 2}
@@ -59,7 +55,7 @@ export function ScoreRing({
 					cy={size / 2}
 					r={radius}
 					fill="none"
-					stroke={`url(#${gradientId})`}
+					stroke={strokeColor}
 					strokeWidth={4}
 					strokeDasharray={circumference}
 					strokeDashoffset={dashOffset}
