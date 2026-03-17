@@ -1,4 +1,5 @@
 import { notFound } from "next/navigation";
+import { ShareButton } from "@/components/ShareButton";
 import {
 	AnalysisCard,
 	AnalysisCardDescription,
@@ -9,6 +10,41 @@ import { CodeBlock } from "@/components/ui/code-block";
 import { DiffLine } from "@/components/ui/diff-line";
 import { ScoreRing } from "@/components/ui/score-ring";
 import { caller } from "@/trpc/server";
+
+export async function generateMetadata({
+	params,
+}: {
+	params: Promise<{ id: string }>;
+}) {
+	const { id } = await params;
+
+	const roast = await caller.roasts.getById({ id }).catch(() => null);
+
+	if (!roast) {
+		return { title: "Roast Not Found" };
+	}
+
+	const ogImageUrl = `/api/og/${id}`;
+
+	return {
+		title: `DevRoast - ${roast.roastTitle}`,
+		description: `Score: ${roast.score}/10 - ${roast.verdict}`,
+		openGraph: {
+			images: [
+				{
+					url: ogImageUrl,
+					width: 1200,
+					height: 630,
+					alt: roast.roastTitle,
+				},
+			],
+		},
+		twitter: {
+			card: "summary_large_image",
+			images: [ogImageUrl],
+		},
+	};
+}
 
 export default async function ResultPage({
 	params,
@@ -53,12 +89,7 @@ export default async function ResultPage({
 							</span>
 						</div>
 						<div className="flex items-center gap-3">
-							<button
-								type="button"
-								className="rounded border border-border-primary px-4 py-2 font-mono text-xs text-text-primary transition-colors hover:bg-bg-surface"
-							>
-								$ share_roast
-							</button>
+							<ShareButton roastId={roast.id} />
 						</div>
 					</div>
 				</div>
