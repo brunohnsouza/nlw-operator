@@ -63,14 +63,14 @@ export function ShareContent({ roast }: ShareContentProps) {
 					<button
 						type="button"
 						onClick={() => router.back()}
-						className="font-mono text-xs text-text-tertiary hover:text-text-primary"
+						className="font-mono text-xs text-text-tertiary hover:text-text-primary hover:cursor-pointer"
 					>
 						← back
 					</button>
 				</header>
 
 				<section className="flex flex-col items-center gap-6">
-					<div ref={cardRef}>
+					<div ref={cardRef} className="scale-125">
 						<ShareCard
 							score={roast.score}
 							verdict={roast.verdict}
