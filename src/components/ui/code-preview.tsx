@@ -18,7 +18,7 @@ export function CodePreview({ code, lang, maxLines = 3 }: CodePreviewProps) {
 
 	return (
 		<Collapsible.Root open={open} onOpenChange={setOpen}>
-			<div className="flex flex-col gap-2">
+			<div className="flex flex-col gap-2 p-4">
 				<code className="font-mono text-xs text-text-secondary whitespace-pre-wrap">
 					{preview}
 				</code>
