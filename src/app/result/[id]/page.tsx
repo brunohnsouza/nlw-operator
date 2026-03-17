@@ -79,7 +79,7 @@ export default async function ResultPage({
 					<div className="flex flex-1 flex-col gap-4">
 						<div className="flex items-center gap-2">
 							<span
-								className="h-2 w-2 rounded-full"
+								className="h-2 w-2 rounded-full shrink-0"
 								style={{ backgroundColor: verdictColor }}
 							/>
 							<span

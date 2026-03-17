@@ -9,11 +9,10 @@ export interface ScoreRingProps {
 	className?: string;
 }
 
-function getScoreColor(value: number, max: number): string {
-	const percentage = (value / max) * 100;
-	if (percentage >= 70) return "var(--color-accent-green)";
-	if (percentage >= 40) return "var(--color-accent-amber)";
-	return "var(--color-accent-red)";
+function getScoreColor(value: number, _max: number): string {
+	if (value < 5) return "var(--color-accent-red)";
+	if (value < 7) return "var(--color-accent-amber)";
+	return "var(--color-accent-green)";
 }
 
 export function ScoreRing({
