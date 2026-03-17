@@ -17,11 +17,15 @@ export type AnalyzeCodeResult = {
 	diff: DiffLine[];
 };
 
-export async function analyzeCode(
-	code: string,
-	language: string,
-	roastMode: boolean,
-): Promise<AnalyzeCodeResult> {
+export async function analyzeCode({
+	code,
+	language,
+	roastMode,
+}: {
+	code: string;
+	language: string;
+	roastMode: boolean;
+}): Promise<AnalyzeCodeResult> {
 	const systemPrompt = roastMode ? SYSTEM_PROMPT_ROAST : SYSTEM_PROMPT_GENTLE;
 
 	const response = await openai.chat.completions.create({
