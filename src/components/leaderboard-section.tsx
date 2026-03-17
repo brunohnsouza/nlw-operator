@@ -42,7 +42,9 @@ export async function LeaderboardSection() {
 	"use cache";
 	cacheLife("hours");
 
-	const data = await caller.leaderboard.getLeaderboard();
+	const data = await caller.leaderboard.getTop3();
+
+	const hasEntries = data.entries.length > 0;
 
 	return (
 		<div className="flex flex-col gap-4">
@@ -56,31 +58,40 @@ export async function LeaderboardSection() {
 			</p>
 			<LeaderboardTableRoot>
 				<LeaderboardTableHeader />
-				{data.entries.map((entry) => (
-					<LeaderboardTableRow
-						key={entry.id}
-						rank={entry.rank}
-						score={Number(entry.score)}
-						code={entry.code}
-						language={entry.language}
-					/>
-				))}
+				{hasEntries ? (
+					data.entries.map((entry) => (
+						<LeaderboardTableRow
+							key={entry.id}
+							rank={entry.rank}
+							score={Number(entry.score)}
+							code={entry.code}
+							language={entry.language}
+						/>
+					))
+				) : (
+					<div className="flex flex-col items-center justify-center py-12">
+						<p className="font-mono text-sm text-text-tertiary">
+							{"// ainda não há registros dos piores códigos"}
+						</p>
+						<p className="font-mono text-xs text-text-secondary mt-1">
+							seja o primeiro a submitir!
+						</p>
+					</div>
+				)}
 			</LeaderboardTableRoot>
-			<div className="flex justify-center pt-2">
-				<span className="font-mono text-xs text-text-tertiary">
-					{`showing top 3 of ${data.totalSubmissions.toLocaleString()} · `}
-					<span className="text-text-secondary">
-						avg score: {data.avgScore.toFixed(1)}/10
+			{hasEntries && (
+				<div className="flex justify-center pt-2">
+					<span className="font-mono text-xs text-text-tertiary">
+						{`showing top 3 of ${data.totalSubmissions.toLocaleString()} · `}
+						<Link
+							href="/leaderboard"
+							className="text-text-secondary hover:text-text-primary transition-colors"
+						>
+							view full leaderboard &gt;&gt;
+						</Link>
 					</span>
-					{" · "}
-					<Link
-						href="/leaderboard"
-						className="text-text-secondary hover:text-text-primary transition-colors"
-					>
-						view full leaderboard &gt;&gt;
-					</Link>
-				</span>
-			</div>
+				</div>
+			)}
 		</div>
 	);
 }

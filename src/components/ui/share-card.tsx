@@ -2,6 +2,12 @@ import { forwardRef } from "react";
 
 import { tv, type VariantProps } from "tailwind-variants";
 
+function getScoreColorHex(score: number): string {
+	if (score < 5) return "#EF4444";
+	if (score < 7) return "#F59E0B";
+	return "#10B981";
+}
+
 export const shareCardVariants = tv({
 	base: "flex flex-col items-center justify-center bg-bg-page border border-border-primary",
 	variants: {
@@ -30,6 +36,7 @@ export const ShareCard = forwardRef<HTMLDivElement, ShareCardProps>(
 		ref,
 	) => {
 		const isMd = size === "md";
+		const scoreColorHex = getScoreColorHex(score);
 
 		return (
 			<div ref={ref} className={shareCardVariants({ size, className })}>
@@ -58,11 +65,12 @@ export const ShareCard = forwardRef<HTMLDivElement, ShareCardProps>(
 					style={{ gap: 2, height: isMd ? 100 : 50 }}
 				>
 					<span
-						className="text-accent-amber font-mono"
+						className="font-mono"
 						style={{
 							fontSize: isMd ? 90 : 45,
 							fontWeight: 900,
 							lineHeight: 1,
+							color: scoreColorHex,
 						}}
 					>
 						{score.toFixed(1)}
@@ -85,16 +93,22 @@ export const ShareCard = forwardRef<HTMLDivElement, ShareCardProps>(
 					style={{ height: isMd ? 28 : 14 }}
 				>
 					<div
-						className="rounded-full bg-accent-red"
+						className="rounded-full"
 						style={{
 							width: isMd ? 14 : 7,
 							height: isMd ? 14 : 7,
 							flexShrink: 0,
+							backgroundColor: scoreColorHex,
 						}}
 					/>
 					<span
-						className="text-accent-red font-mono"
-						style={{ fontSize: isMd ? 12 : 6, fontWeight: 400 }}
+						className="font-mono"
+						style={{
+							fontSize: isMd ? 12 : 6,
+							fontWeight: 400,
+							lineHeight: isMd ? 14 : 7,
+							color: scoreColorHex,
+						}}
 					>
 						{verdict || "unknown"}
 					</span>

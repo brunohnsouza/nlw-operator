@@ -34,7 +34,7 @@ export function ShareContent({ roast }: ShareContentProps) {
 		try {
 			const canvas = await html2canvas(cardRef.current, {
 				backgroundColor: "#0C0C0C",
-				scale: 2,
+				scale: 4,
 			});
 
 			const link = document.createElement("a");

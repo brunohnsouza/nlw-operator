@@ -21,7 +21,10 @@ export function Toggle({
 }: ToggleProps) {
 	return (
 		<BaseToggle
-			className={cn("flex items-center gap-2.5 hover:cursor-pointer", className)}
+			className={cn(
+				"flex items-center gap-2.5 hover:cursor-pointer",
+				className,
+			)}
 			defaultPressed={defaultPressed}
 			pressed={pressed}
 			onPressedChange={onPressedChange}

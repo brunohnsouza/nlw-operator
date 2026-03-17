@@ -11,12 +11,7 @@ export function LeaderboardTableRoot({
 	children,
 }: LeaderboardTableRootProps) {
 	return (
-		<div
-			className={cn(
-				"border border-border-primary bg-bg-page",
-				className,
-			)}
-		>
+		<div className={cn("border border-border-primary bg-bg-page", className)}>
 			{children}
 		</div>
 	);

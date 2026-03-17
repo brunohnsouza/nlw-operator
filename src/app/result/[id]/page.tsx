@@ -11,6 +11,12 @@ import { DiffLine } from "@/components/ui/diff-line";
 import { ScoreRing } from "@/components/ui/score-ring";
 import { caller } from "@/trpc/server";
 
+function getScoreColorHex(score: number): string {
+	if (score < 5) return "#EF4444";
+	if (score < 7) return "#F59E0B";
+	return "#10B981";
+}
+
 export async function generateMetadata({
 	params,
 }: {
@@ -63,6 +69,7 @@ export default async function ResultPage({
 	}
 
 	const linesCount = roast.code.split("\n").length;
+	const verdictColor = getScoreColorHex(roast.score);
 
 	return (
 		<div className="flex min-h-[calc(100vh-3.5rem)] flex-col items-center px-20 py-10">
@@ -71,8 +78,14 @@ export default async function ResultPage({
 					<ScoreRing value={roast.score} />
 					<div className="flex flex-1 flex-col gap-4">
 						<div className="flex items-center gap-2">
-							<span className="h-2 w-2 rounded-full bg-accent-red" />
-							<span className="font-mono text-sm font-medium text-accent-red">
+							<span
+								className="h-2 w-2 rounded-full"
+								style={{ backgroundColor: verdictColor }}
+							/>
+							<span
+								className="font-mono text-sm font-medium"
+								style={{ color: verdictColor }}
+							>
 								verdict: {roast.verdict}
 							</span>
 						</div>

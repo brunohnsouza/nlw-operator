@@ -1,12 +1,21 @@
-import { cacheLife } from "next/cache";
+import Link from "next/link";
 import { LeaderboardEntry } from "@/components/ui/leaderboard-entry";
 import { caller } from "@/trpc/server";
 
-export async function LeaderboardPageContent() {
-	"use cache";
-	cacheLife("hours");
+interface LeaderboardPageContentProps {
+	searchParams: Promise<{ page?: string }>;
+}
 
-	const data = await caller.leaderboard.getLeaderboard();
+export async function LeaderboardPageContent({
+	searchParams,
+}: LeaderboardPageContentProps) {
+	const params = await searchParams;
+	const page = Number(params.page) || 1;
+
+	const data = await caller.leaderboard.getLeaderboard({ page });
+
+	const hasNextPage = page < data.totalPages;
+	const hasPrevPage = page > 1;
 
 	return (
 		<div className="flex flex-col gap-10">
@@ -51,6 +60,31 @@ export async function LeaderboardPageContent() {
 					</div>
 				))}
 			</div>
+
+			{/* Pagination */}
+			{(hasPrevPage || hasNextPage) && (
+				<div className="flex items-center justify-center gap-4">
+					{hasPrevPage && (
+						<Link
+							href={`/leaderboard?page=${page - 1}`}
+							className="font-mono text-sm text-text-secondary hover:text-text-primary transition-colors"
+						>
+							{"<"} prev
+						</Link>
+					)}
+					<span className="font-mono text-xs text-text-tertiary">
+						page {data.page} of {data.totalPages}
+					</span>
+					{hasNextPage && (
+						<Link
+							href={`/leaderboard?page=${page + 1}`}
+							className="font-mono text-sm text-text-secondary hover:text-text-primary transition-colors"
+						>
+							next {">"}
+						</Link>
+					)}
+				</div>
+			)}
 		</div>
 	);
 }
