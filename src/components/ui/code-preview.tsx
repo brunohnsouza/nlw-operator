@@ -26,7 +26,7 @@ export function CodePreview({ code, lang, maxLines = 3 }: CodePreviewProps) {
 					<button
 						type="button"
 						onClick={() => setOpen(true)}
-						className="self-start font-mono text-xs text-accent-green hover:text-accent-green/80 transition-colors"
+						className="self-start font-mono text-xs text-accent-green hover:text-accent-green/80 transition-colors hover:cursor-pointer"
 					>
 						show more
 					</button>
@@ -35,7 +35,7 @@ export function CodePreview({ code, lang, maxLines = 3 }: CodePreviewProps) {
 					<button
 						type="button"
 						onClick={() => setOpen(false)}
-						className="self-start font-mono text-xs text-text-tertiary hover:text-text-secondary transition-colors"
+						className="self-start font-mono text-xs text-text-tertiary hover:text-text-secondary transition-colors hover:cursor-pointer"
 					>
 						show less
 					</button>

@@ -13,7 +13,7 @@ export function LeaderboardTableRoot({
 	return (
 		<div
 			className={cn(
-				"rounded-lg border border-border-primary bg-bg-page",
+				"border border-border-primary bg-bg-page",
 				className,
 			)}
 		>
@@ -82,7 +82,7 @@ export function LeaderboardTableRow({
 			)}
 		>
 			<span className="w-[50px] pt-1 font-mono text-sm text-text-tertiary">
-				#{rank}
+				{rank}
 			</span>
 			<span
 				className={cn("w-[70px] pt-1 font-mono text-sm font-bold", scoreColor)}

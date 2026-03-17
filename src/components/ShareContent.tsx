@@ -70,7 +70,7 @@ export function ShareContent({ roast }: ShareContentProps) {
 				</header>
 
 				<section className="flex flex-col items-center gap-6">
-					<div ref={cardRef} className="scale-125">
+					<div ref={cardRef}>
 						<ShareCard
 							score={roast.score}
 							verdict={roast.verdict}

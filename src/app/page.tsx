@@ -7,17 +7,7 @@ import {
 import { MetricsSection } from "@/components/ui/metrics-section";
 import { EditorSection } from "./editor-section";
 
-const sampleCode = `function calculateTotal(items) {
-  var total = 0;
-  for (var i = 0; i < items.length; i++) {
-    total += items[i].price;
-  }
-  return total;
-}
-
-// TODO: handle tax calculation
-// TODO: handle currency conversion
-}`;
+const sampleCode = ``;
 
 export default function HomePage() {
 	return (

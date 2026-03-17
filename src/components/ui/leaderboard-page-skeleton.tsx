@@ -28,7 +28,7 @@ export function LeaderboardPageSkeleton() {
 				{Array.from({ length: 20 }).map((_, i) => (
 					<div
 						key={i}
-						className="flex flex-col rounded-lg border border-border-primary bg-bg-page"
+						className="flex flex-col border border-border-primary bg-bg-page"
 					>
 						{/* Entry Header */}
 						<div className="flex h-12 items-center justify-between border-b border-border-primary px-5">

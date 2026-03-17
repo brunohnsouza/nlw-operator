@@ -3,10 +3,10 @@ import { type ButtonHTMLAttributes, forwardRef } from "react";
 import { tv, type VariantProps } from "tailwind-variants";
 
 export const buttonVariants = tv({
-	base: "inline-flex items-center justify-center rounded-md font-medium transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-500 focus-visible:ring-offset-2 focus-visible:ring-offset-zinc-900 disabled:pointer-events-none disabled:opacity-50",
+	base: "inline-flex items-center justify-center font-medium transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent-green focus-visible:ring-offset-2 focus-visible:ring-offset-zinc-900 disabled:pointer-events-none disabled:opacity-50 hover:cursor-pointer",
 	variants: {
 		variant: {
-			primary: "bg-emerald-500 text-zinc-950 hover:bg-emerald-400",
+			primary: "bg-accent-green text-zinc-950 hover:bg-accent-green/90",
 			secondary: "bg-zinc-800 text-zinc-100 hover:bg-zinc-700",
 			outline: "border border-zinc-600 text-zinc-100 hover:bg-zinc-800",
 			ghost: "text-zinc-100 hover:bg-zinc-800",

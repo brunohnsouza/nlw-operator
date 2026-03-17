@@ -3,7 +3,7 @@ import { tv } from "tailwind-variants";
 import { cn } from "@/lib/utils";
 
 const analysisCardVariants = tv({
-	base: "w-full rounded-lg border border-border-primary bg-bg-page p-5 flex flex-col gap-3",
+	base: "w-full border border-border-primary bg-bg-page p-5 flex flex-col gap-3",
 });
 
 export type AnalysisCardProps = {

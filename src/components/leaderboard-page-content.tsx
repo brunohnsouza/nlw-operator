@@ -39,7 +39,7 @@ export async function LeaderboardPageContent() {
 				{data.entries.map((entry) => (
 					<div
 						key={entry.id}
-						className="rounded-lg border border-border-primary bg-bg-page"
+						className="border border-border-primary bg-bg-page"
 					>
 						<LeaderboardEntry
 							rank={entry.rank}

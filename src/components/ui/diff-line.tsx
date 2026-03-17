@@ -8,8 +8,8 @@ const diffLineVariants = tv({
 	base: "flex gap-2 py-2 px-4 font-mono text-sm",
 	variants: {
 		type: {
-			removed: "bg-red-950/50 text-text-secondary",
-			added: "bg-emerald-950/50 text-text-primary",
+			removed: "bg-red-950/30 text-text-secondary",
+			added: "bg-emerald-950/30 text-text-primary",
 			context: "bg-transparent text-text-tertiary",
 		},
 	},

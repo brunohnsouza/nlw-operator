@@ -65,7 +65,7 @@ export function CodeEditor({
 	const [internalValue, setInternalValue] = useState(controlledValue || "");
 	const [selectedLanguage, setSelectedLanguage] =
 		useState<SupportedLanguage>("javascript");
-	const [detectedLanguage, setDetectedLanguage] =
+	const [_detectedLanguage, setDetectedLanguage] =
 		useState<SupportedLanguage>("javascript");
 	const [highlightedHtml, setHighlightedHtml] = useState("");
 	const [isDropdownOpen, setIsDropdownOpen] = useState(false);
@@ -150,7 +150,7 @@ export function CodeEditor({
 	return (
 		<div
 			className={cn(
-				"flex flex-col rounded-lg border border-border-primary bg-bg-input overflow-hidden",
+				"flex flex-col border border-border-primary bg-bg-input overflow-hidden",
 				className,
 			)}
 		>

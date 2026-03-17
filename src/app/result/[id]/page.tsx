@@ -105,9 +105,7 @@ export default async function ResultPage({
 							your_submission
 						</span>
 					</div>
-					<div className="rounded-lg border border-border-primary bg-bg-input">
-						<CodeBlock code={roast.code} lang={roast.language} />
-					</div>
+					<CodeBlock code={roast.code} lang={roast.language} />
 				</div>
 
 				<div className="h-px w-full bg-border-primary" />
@@ -147,7 +145,7 @@ export default async function ResultPage({
 							suggested_fix
 						</span>
 					</div>
-					<div className="rounded-lg border border-border-primary bg-bg-input">
+					<div className="border border-border-primary bg-bg-input">
 						<div className="flex h-10 items-center border-b border-border-primary px-4">
 							<span className="font-mono text-xs text-text-secondary">
 								your_code.ts → improved_code.ts

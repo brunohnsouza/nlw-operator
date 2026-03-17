@@ -48,7 +48,7 @@ export async function CodeBlock({
 
 	return (
 		<div
-			className={`rounded-lg border border-border-primary bg-bg-input overflow-hidden ${
+			className={`border border-border-primary bg-bg-input overflow-hidden ${
 				className ?? ""
 			}`}
 		>

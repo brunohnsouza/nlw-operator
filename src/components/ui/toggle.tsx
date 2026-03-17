@@ -21,7 +21,7 @@ export function Toggle({
 }: ToggleProps) {
 	return (
 		<BaseToggle
-			className={cn("flex items-center gap-2.5", className)}
+			className={cn("flex items-center gap-2.5 hover:cursor-pointer", className)}
 			defaultPressed={defaultPressed}
 			pressed={pressed}
 			onPressedChange={onPressedChange}
@@ -29,13 +29,13 @@ export function Toggle({
 		>
 			<div
 				className={cn(
-					"relative h-[22px] w-10 rounded-full p-[3px] transition-colors",
+					"relative h-[23px] w-10 rounded-full p-[3px] transition-colors",
 					pressed ? "bg-accent-green" : "bg-border-primary",
 				)}
 			>
 				<div
 					className={cn(
-						"block h-4 w-4 rounded-full bg-white transition-transform",
+						"block h-4 w-4 rounded-full bg-[#0a0a0a] transition-transform",
 						pressed ? "translate-x-4" : "translate-x-0",
 					)}
 				/>

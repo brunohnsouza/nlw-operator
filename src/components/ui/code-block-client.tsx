@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useMemo, useState } from "react";
+import { useEffect, useState } from "react";
 import { createHighlighter, type Highlighter } from "shiki";
 import css from "shiki/langs/css.mjs";
 import go from "shiki/langs/go.mjs";
@@ -61,13 +61,13 @@ export function CodeBlockClient({
 	if (isLoading) {
 		return (
 			<div
-				className={`rounded-lg border border-border-primary bg-bg-input overflow-hidden ${
+				className={`border border-border-primary bg-bg-input overflow-hidden ${
 					className ?? ""
 				}`}
 			>
 				<div className="flex">
 					{showLineNumbers && (
-						<div className="w-10 min-w-[40px] border-r border-border-primary bg-bg-surface py-3 px-[10px] text-right">
+						<div className="w-10 min-w-[40px] border-r border-border-primary bg-[#101010] py-3 px-[10px] text-right">
 							{lines.map((_, i) => (
 								<div
 									key={i}
@@ -78,7 +78,7 @@ export function CodeBlockClient({
 							))}
 						</div>
 					)}
-					<div className="flex-1 overflow-x-auto p-3">
+					<div className="flex-1 bg-[#101010] overflow-x-auto p-3">
 						<code className="font-mono text-xs text-text-secondary">
 							{code}
 						</code>
@@ -90,7 +90,7 @@ export function CodeBlockClient({
 
 	return (
 		<div
-			className={`rounded-lg border border-border-primary bg-bg-input overflow-hidden ${
+			className={`border border-border-primary bg-bg-input overflow-hidden ${
 				className ?? ""
 			}`}
 		>
@@ -108,7 +108,7 @@ export function CodeBlockClient({
 			)}
 			<div className="flex">
 				{showLineNumbers && (
-					<div className="w-10 min-w-[40px] border-r border-border-primary bg-bg-surface py-3 px-[10px] text-right">
+					<div className="w-10 min-w-[40px] border-r border-border-primary bg-[#101010] py-3 px-[10px] text-right">
 						{lines.map((_, i) => (
 							<div
 								key={i}
@@ -120,7 +120,7 @@ export function CodeBlockClient({
 					</div>
 				)}
 				<div
-					className="flex-1 overflow-x-auto p-3"
+					className="flex-1 bg-[#101010] overflow-x-auto p-3"
 					dangerouslySetInnerHTML={{ __html: htmlOutput }}
 				/>
 			</div>
