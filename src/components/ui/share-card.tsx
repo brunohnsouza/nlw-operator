@@ -7,7 +7,7 @@ export const shareCardVariants = tv({
 	variants: {
 		size: {
 			sm: "w-[300px] h-[158px] p-4 gap-2",
-			md: "w-[600px] h-[315px] p-8 gap-3.5",
+			md: "w-[720px] h-[378px] p-9 gap-4",
 		},
 	},
 	defaultVariants: {
@@ -33,17 +33,17 @@ export const ShareCard = forwardRef<HTMLDivElement, ShareCardProps>(
 			<div ref={ref} className={shareCardVariants({ size, className })}>
 				<div
 					className="flex items-center gap-1"
-					style={{ height: size === "md" ? 20 : 10 }}
+					style={{ height: size === "md" ? 24 : 10 }}
 				>
 					<span
 						className="text-accent-green font-mono"
-						style={{ fontSize: size === "md" ? 12 : 6, fontWeight: 700 }}
+						style={{ fontSize: size === "md" ? 14 : 6, fontWeight: 700 }}
 					>
 						&gt;
 					</span>
 					<span
 						className="text-text-primary font-mono"
-						style={{ fontSize: size === "md" ? 10 : 5, fontWeight: 500 }}
+						style={{ fontSize: size === "md" ? 12 : 5, fontWeight: 500 }}
 					>
 						devroast
 					</span>
@@ -51,12 +51,12 @@ export const ShareCard = forwardRef<HTMLDivElement, ShareCardProps>(
 
 				<div
 					className="flex items-end"
-					style={{ gap: 2, height: size === "md" ? 85 : 42 }}
+					style={{ gap: 2, height: size === "md" ? 100 : 42 }}
 				>
 					<span
 						className="text-accent-amber font-mono"
 						style={{
-							fontSize: size === "md" ? 80 : 40,
+							fontSize: size === "md" ? 96 : 40,
 							fontWeight: 900,
 							lineHeight: 1,
 						}}
@@ -66,7 +66,7 @@ export const ShareCard = forwardRef<HTMLDivElement, ShareCardProps>(
 					<span
 						className="text-text-tertiary font-mono"
 						style={{
-							fontSize: size === "md" ? 28 : 14,
+							fontSize: size === "md" ? 34 : 14,
 							fontWeight: 400,
 							lineHeight: 1,
 						}}
@@ -77,18 +77,18 @@ export const ShareCard = forwardRef<HTMLDivElement, ShareCardProps>(
 
 				<div
 					className="flex items-center gap-1"
-					style={{ height: size === "md" ? 20 : 10 }}
+					style={{ height: size === "md" ? 24 : 10 }}
 				>
 					<div
 						className="rounded-full bg-accent-red"
 						style={{
-							width: size === "md" ? 6 : 3,
-							height: size === "md" ? 6 : 3,
+							width: size === "md" ? 7 : 3,
+							height: size === "md" ? 7 : 3,
 						}}
 					/>
 					<span
 						className="text-accent-red font-mono"
-						style={{ fontSize: size === "md" ? 10 : 5, fontWeight: 400 }}
+						style={{ fontSize: size === "md" ? 12 : 5, fontWeight: 400 }}
 					>
 						{verdict || "unknown"}
 					</span>
@@ -96,14 +96,14 @@ export const ShareCard = forwardRef<HTMLDivElement, ShareCardProps>(
 
 				<div
 					className="text-text-tertiary font-mono"
-					style={{ fontSize: size === "md" ? 8 : 4 }}
+					style={{ fontSize: size === "md" ? 10 : 4 }}
 				>
 					lang: {language} · {linesCount} lines
 				</div>
 
 				<div
 					className="text-text-primary text-center"
-					style={{ fontSize: size === "md" ? 11 : 5.5, lineHeight: 1.4 }}
+					style={{ fontSize: size === "md" ? 13 : 5.5, lineHeight: 1.4 }}
 				>
 					&quot;{roastTitle || "No title"}&quot;
 				</div>
