@@ -84,6 +84,7 @@ export function ShareContent({ roast }: ShareContentProps) {
 								display: "flex",
 								alignItems: "center",
 								gap: 4,
+								height: 20,
 								marginBottom: 14,
 							}}
 						>
@@ -112,8 +113,9 @@ export function ShareContent({ roast }: ShareContentProps) {
 						<div
 							style={{
 								display: "flex",
-								alignItems: "baseline",
+								alignItems: "flex-end",
 								gap: 2,
+								height: 85,
 								marginBottom: 14,
 							}}
 						>
@@ -146,6 +148,7 @@ export function ShareContent({ roast }: ShareContentProps) {
 								display: "flex",
 								alignItems: "center",
 								gap: 4,
+								height: 20,
 								marginBottom: 14,
 							}}
 						>
