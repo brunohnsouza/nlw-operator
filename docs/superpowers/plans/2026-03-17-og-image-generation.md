@@ -236,9 +236,7 @@ git commit -m "feat: add RoastImage OG template component"
 
 ```typescript
 import { NextResponse } from "next/server";
-import { sql } from "drizzle-orm";
-import { db } from "@/db";
-import { submissions } from "@/db/schema";
+import { caller } from "@/trpc/server";
 import RoastImage from "@/components/og/RoastImage";
 
 export async function GET(
@@ -248,27 +246,21 @@ export async function GET(
   const { id } = await params;
 
   try {
-    const [submission] = await db
-      .select()
-      .from(submissions)
-      .where(sql`${submissions.id} = ${id}`);
+    const roast = await caller.roasts.getById({ id });
 
-    if (!submission) {
+    if (!roast) {
       return new NextResponse("Roast not found", { status: 404 });
     }
 
-    const score = Number(submission.score) || 0;
-    const verdict = submission.verdict || "unknown";
-    const language = submission.language || "unknown";
-    const linesCount = submission.code.split("\n").length;
-    const roastTitle = submission.roastTitle || "No title";
+    const { score, verdict, language, roastTitle, code } = roast;
+    const linesCount = code.split("\n").length;
 
     const image = await RoastImage({
       score,
-      verdict,
-      language,
+      verdict: verdict || "unknown",
+      language: language || "unknown",
       linesCount,
-      roastTitle,
+      roastTitle: roastTitle || "No title",
     });
 
     return new NextResponse(image.body, {
@@ -297,15 +289,54 @@ git commit -m "feat: add OG image API endpoint"
 
 **Files:**
 - Modify: `src/app/result/[id]/page.tsx`
+- Create: `src/components/ShareButton.tsx`
 
-- [ ] **Step 1: Update ResultPage to add share functionality**
+- [ ] **Step 1: Create ShareButton client component**
 
-Add import for `generateMetadata`:
+Create `src/components/ShareButton.tsx`:
+
+```tsx
+"use client";
+
+import { useState } from "react";
+
+interface ShareButtonProps {
+  roastId: string;
+}
+
+export function ShareButton({ roastId }: ShareButtonProps) {
+  const [copied, setCopied] = useState(false);
+
+  const handleShare = async () => {
+    const url = `${window.location.origin}/result/${roastId}`;
+    await navigator.clipboard.writeText(url);
+    setCopied(true);
+    setTimeout(() => setCopied(false), 2000);
+  };
+
+  return (
+    <button
+      type="button"
+      onClick={handleShare}
+      className="rounded border border-border-primary px-4 py-2 font-mono text-xs text-text-primary transition-colors hover:bg-bg-surface"
+    >
+      {copied ? "$ copied!" : "$ share_roast"}
+    </button>
+  );
+}
+```
+
+- [ ] **Step 2: Update ResultPage with metadata and ShareButton**
+
+Update `src/app/result/[id]/page.tsx`:
+
+Add import:
 ```typescript
+import { ShareButton } from "@/components/ShareButton";
 import { generateMetadata } from "next";
 ```
 
-Add metadata generation after the component:
+Add metadata generation (export at top level, after imports):
 ```typescript
 export async function generateMetadata({
   params,
@@ -320,7 +351,7 @@ export async function generateMetadata({
     return { title: "Roast Not Found" };
   }
 
-  const ogImageUrl = `/api/og/${id}`;
+  const ogImageUrl = `${process.env.NEXT_PUBLIC_BASE_URL || ""}/api/og/${id}`;
 
   return {
     title: `DevRoast - ${roast.roastTitle}`,
@@ -343,46 +374,15 @@ export async function generateMetadata({
 }
 ```
 
-- [ ] **Step 2: Update share button to copy OG URL**
-
-Replace the share button with client-side logic:
+Replace the share button JSX with the ShareButton component:
 ```tsx
-"use client";
-
-import { useState } from "react";
-
-export default function ResultPage({ params }: { params: Promise<{ id: string }> }) {
-  // ... existing code ...
-  const [copied, setCopied] = useState(false);
-
-  const handleShare = async () => {
-    const { id } = await params;
-    const url = `${window.location.origin}/api/og/${id}`;
-    await navigator.clipboard.writeText(url);
-    setCopied(true);
-    setTimeout(() => setCopied(false), 2000);
-  };
-
-  return (
-    // ... existing JSX ...
-    <button
-      type="button"
-      onClick={handleShare}
-      className="rounded border border-border-primary px-4 py-2 font-mono text-xs text-text-primary transition-colors hover:bg-bg-surface"
-    >
-      {copied ? "$ copied!" : "$ share_roast"}
-    </button>
-    // ... rest of code ...
-  );
-}
+<ShareButton roastId={roast.id} />
 ```
-
-Note: You'll need to refactor to separate client and server parts. Create a client component for the share button or use a separate component.
 
 - [ ] **Step 3: Commit**
 
 ```bash
-git add src/app/result/\[id\]/page.tsx
+git add src/app/result/\[id\]/page.tsx src/components/ShareButton.tsx
 git commit -m "feat: add share functionality and OG metadata to result page"
 ```
 
