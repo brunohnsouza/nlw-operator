@@ -12,16 +12,14 @@ import {
 export const roastLevelEnum = pgEnum("roast_level", ["gentle", "roast"]);
 
 export type DiffLine = {
-	type: "added" | "removed" | "unchanged";
-	content: string;
-	lineNumber: number;
+	type: "context" | "removed" | "added";
+	code: string;
 };
 
 export type Issue = {
-	severity: "error" | "warning" | "info";
-	message: string;
-	line?: number;
-	code?: string;
+	type: "critical" | "warning" | "good";
+	title: string;
+	description: string;
 };
 
 export const submissions = pgTable("submissions", {
