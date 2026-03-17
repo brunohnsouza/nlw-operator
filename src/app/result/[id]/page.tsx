@@ -1,3 +1,5 @@
+import { cacheLife } from "next/cache";
+
 import {
 	AnalysisCard,
 	AnalysisCardDescription,
@@ -8,7 +10,10 @@ import { CodeBlock } from "@/components/ui/code-block";
 import { DiffLine } from "@/components/ui/diff-line";
 import { ScoreRing } from "@/components/ui/score-ring";
 
-export default function ResultPage() {
+export default async function ResultPage() {
+	"use cache";
+	cacheLife("days");
+
 	const STATIC_DATA = {
 		score: 3.5,
 		verdict: "needs_serious_help",

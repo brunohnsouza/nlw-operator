@@ -1,7 +1,11 @@
+import { cacheLife } from "next/cache";
 import { LeaderboardEntry } from "@/components/ui/leaderboard-entry";
 import { caller } from "@/trpc/server";
 
 export async function LeaderboardPageContent() {
+	"use cache";
+	cacheLife("hours");
+
 	const data = await caller.leaderboard.getLeaderboard();
 
 	return (

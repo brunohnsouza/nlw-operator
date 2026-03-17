@@ -1,5 +1,6 @@
 import "./globals.css";
 
+import { Suspense } from "react";
 import { Navbar } from "@/components/ui/navbar";
 import { TRPCReactProvider } from "@/trpc/client";
 
@@ -13,7 +14,9 @@ export default function RootLayout({
 			<body className="bg-bg-page">
 				<TRPCReactProvider>
 					<Navbar />
-					<main>{children}</main>
+					<Suspense fallback={null}>
+						<main>{children}</main>
+					</Suspense>
 				</TRPCReactProvider>
 			</body>
 		</html>

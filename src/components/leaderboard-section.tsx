@@ -1,3 +1,4 @@
+import { cacheLife } from "next/cache";
 import Link from "next/link";
 
 import {
@@ -38,6 +39,9 @@ export const LeaderboardSkeleton = () => {
 };
 
 export async function LeaderboardSection() {
+	"use cache";
+	cacheLife("hours");
+
 	const data = await caller.leaderboard.getLeaderboard();
 
 	return (
