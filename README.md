@@ -1,6 +1,8 @@
-# DevRoast
+# NLW Operator
 
 Análise de código com IA e honestidade brutal. Cole seu código, seja criticado.
+
+https://github.com/user-attachments/assets/d7befa1b-3547-4ed5-8c37-ee1610ca0ebe
 
 ## Funcionalidades
 
