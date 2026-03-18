@@ -1,36 +1,178 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# DevRoast
 
-## Getting Started
+Análise de código com IA e honestidade brutal. Cole seu código, seja criticado.
 
-First, run the development server:
+## Funcionalidades
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+- **Análise de Código** - Envie código e receba feedback detalhado sobre qualidade
+- **Modo Roast** - Alterne entre feedback gentil ou sarcasmo máximo
+- **Leaderboard** - Veja os piores códigos submetidos ranqueados por nota de vergonha
+- **Syntax Highlighting** - Blocos de código lindos com tema vesper
+- **Score Ring** - Representação visual das notas de qualidade do código
+- **Share Card** - Baixe uma imagem compartilhável com seu resultado
+
+## Tecnologias
+
+- **Framework**: Next.js 16 (App Router)
+- **Styling**: Tailwind CSS v4
+- **Linting**: Biome
+- **Syntax Highlighting**: Shiki
+- **Database**: PostgreSQL + Drizzle ORM
+- **API**: tRPC
+- **AI**: Groq
+
+## Pré-requisitos
+
+1. **Node.js** 20+
+2. **PostgreSQL** (pode usar Docker)
+3. **API Key de IA**:
+   - `GROQ_API_KEY` - Groq
+
+### Variáveis de Ambiente
+
+Crie um arquivo `.env` com:
+
+```env
+# Database
+DATABASE_URL=postgresql://user:password@localhost:5432/devroast
+
+# AI (Groq - obrigatório)
+GROQ_API_KEY=your_groq_api_key
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## Começando
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+```bash
+# Instalar dependências
+npm install
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+# Configurar banco de dados
+npm run db:push
 
-## Learn More
+# (Opcional) Popular banco com dados de exemplo
+npm run db:seed
 
-To learn more about Next.js, take a look at the following resources:
+# Iniciar desenvolvimento
+npm run dev
+```
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+Acesse http://localhost:3000
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+## Scripts Disponíveis
 
-## Deploy on Vercel
+| Comando | Descrição |
+|---------|-----------|
+| `npm run dev` | Iniciar servidor de desenvolvimento |
+| `npm run build` | Build para produção |
+| `npm run start` | Iniciar servidor de produção |
+| `npm run lint` | Executar Biome linter |
+| `npm run db:push` | Executar migrations do Drizzle |
+| `npm run db:studio` | Abrir Drizzle Studio |
+| `npm run db:seed` | Executar seed do banco |
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+## Estrutura do Projeto
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+```
+src/
+├── app/                   
+│   ├── page.tsx            # Homepage
+│   ├── result/[id]/       # Página de resultado
+│   ├── share/[id]/         # Página de share (download imagem)
+│   ├── leaderboard/        # Página do leaderboard
+│   └── api/                # API Routes (OG Image, tRPC)
+│
+├── components/           # Componentes React
+│
+├── db/                     # Database (Drizzle)
+│   ├── schema.ts           # Schema das tabelas
+│   ├── seed.ts             # Seed de dados
+│   └── index.ts            # Configuração drizzle
+│
+├── trpc/                   # tRPC
+│   ├── init.ts             # Inicialização tRPC
+│   ├── client.tsx          # Provider React
+│   ├── server.tsx          # Server caller
+│   ├── routers/           # Routers/Procedures
+│   └── AGENTS.md           # Padrões tRPC
+│
+└── lib/                    # Utilitários
+    ├── ai.ts               # Módulo de IA
+    ├── utils.ts            # Funções utilitárias
+    └── detect-language.ts  # Detecção de linguagem
+```
+
+## Páginas
+
+### Home
+
+Editor de código, métricas e preview do leaderboard
+
+![Home](.github/home.jpeg)
+
+### Resultado Detalhado
+
+Resultado detalhado da análise (score, issues, diff)
+
+![Resultado Detalhado](.github/result.jpeg)
+
+### Share Card
+
+Página para baixar imagem compartilhável do resultado
+
+![Share Card](.github/share.jpeg)
+
+### Leaderboard
+
+Leaderboard completo com paginação
+
+![Leaderboard](.github/leaderboard.jpeg)
+
+## Padrões e Boas Práticas
+
+### tRPC
+
+- Usar `baseProcedure` como base
+- sempre validar inputs com Zod
+- Usar `superjson` para serialização
+- Queries paralelas com `Promise.all` quando possível
+- Para Server Components: usar `caller` de `@/trpc/server`
+
+### Database (Drizzle)
+
+- Usar `defaultRandom()` para UUIDs
+- Usar `defaultNow()` para timestamps
+- Tipar com `$inferSelect` e `$inferInsert`
+
+### Cores por Score
+
+O app usa lógica padronizada para cores baseadas no score (0-10):
+
+| Score | Cor | Hex |
+|-------|-----|-----|
+| < 5 | Vermelho | #EF4444 |
+| 5-7 | Amarelo | #F59E0B |
+| >= 7 | Verde | #10B981 |
+
+## Design System
+
+O projeto usa um tema customizado com variáveis CSS:
+
+```css
+/* Cores de acento */
+--color-accent-green: #10B981;
+--color-accent-red: #EF4444;
+--color-accent-amber: #F59E0B;
+
+/* Cores de background */
+--color-bg-page: #09090B;
+--color-bg-surface: #18181B;
+--color-bg-input: #27272A;
+
+/* Cores de borda */
+--color-border-primary: #27272A;
+
+/* Cores de texto */
+--color-text-primary: #FAFAFA;
+--color-text-secondary: #A1A1AA;
+--color-text-tertiary: #71717A;
+```
